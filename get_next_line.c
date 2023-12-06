@@ -6,7 +6,7 @@
 /*   By: adjoly <adjoly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 17:11:59 by adjoly            #+#    #+#             */
-/*   Updated: 2023/12/04 18:44:34 by adjoly           ###   ########.fr       */
+/*   Updated: 2023/12/06 11:18:18 by adjoly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,17 +34,9 @@ char	*get_next_line(int fd)
 
 	if (BUFFER_SIZE <= 0 || fd < 0)
 		return (NULL);
-	res = malloc(1);
-	if (!res)
-		return (NULL);
-	res[0] = '\0';
+	res = ft_calloc(1, 1);
 	if (!buf)
-	{
-		buf = malloc((BUFFER_SIZE + 1) * sizeof(char));
-		if (!buf)
-			return (NULL);
-		buf[0] = '\0';
-	}
+		buf = ft_calloc(sizeof(char), BUFFER_SIZE + 1);
 	while (1)
 	{
 		tmp = ft_strjoin(res, buf);
