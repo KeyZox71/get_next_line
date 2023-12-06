@@ -6,7 +6,7 @@
 /*   By: adjoly <adjoly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 17:12:02 by adjoly            #+#    #+#             */
-/*   Updated: 2023/12/06 11:21:57 by adjoly           ###   ########.fr       */
+/*   Updated: 2023/12/06 12:05:08 by adjoly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ char	*ft_strjoin(char *s1, char *s2)
 		i++;
 		j++;
 	}
+	free(s1);
 	result[i] = '\0';
 	return (result);
 }

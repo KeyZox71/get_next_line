@@ -6,7 +6,7 @@
 /*   By: adjoly <adjoly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 17:11:59 by adjoly            #+#    #+#             */
-/*   Updated: 2023/12/06 11:18:18 by adjoly           ###   ########.fr       */
+/*   Updated: 2023/12/06 12:34:24 by adjoly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ char	*get_next_line(int fd)
 {
 	static char	*buf;
 	char		*res;
-	char		*tmp;
 	int			size;
 	int			bytes_read;
 
@@ -37,37 +36,24 @@ char	*get_next_line(int fd)
 	res = ft_calloc(1, 1);
 	if (!buf)
 		buf = ft_calloc(sizeof(char), BUFFER_SIZE + 1);
-	while (1)
+	while (buf && res)
 	{
-		tmp = ft_strjoin(res, buf);
-		if (!tmp)
-			return (NULL);
-		free(res);
-		res = tmp;
-		size = check_line(res);
+		// size = check_line(res);
 		bytes_read = read(fd, buf, BUFFER_SIZE);
-		buf[bytes_read] = 0;
-		if (bytes_read == 0 && ft_strlen(res) != 0)
+		res = ft_strjoin(res, buf);
+		buf[bytes_read] = '\0';
+		if (bytes_read < 1)
 		{
+			if (ft_strlen(res) > 0)
+				return (res);
 			free(buf);
 			buf = NULL;
-			return (res);
-		}
-		else if (bytes_read == 0)
 			return (NULL);
-		if (size != 0)
-		{
-			tmp = ft_strjoin(res, buf);
-			if (!tmp)
-				return (NULL);
-			free(res);
-			res = tmp;
-			ft_strlcpy(buf, &res[size], ft_strlen(&res[size]));
-			buf[ft_strlen(&res[size])] = 0;
-			res[size] = 0;
-			return (res);
 		}
+		else if (bytes_read >= 1)
+			return (res);
 	}
+	return (NULL);
 }
 
 #include <unistd.h>
