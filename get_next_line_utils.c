@@ -6,7 +6,7 @@
 /*   By: adjoly <adjoly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 17:12:02 by adjoly            #+#    #+#             */
-/*   Updated: 2023/12/06 12:05:08 by adjoly           ###   ########.fr       */
+/*   Updated: 2023/12/08 11:17:51 by adjoly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,12 @@ size_t	ft_strlen(char *s)
 	size_t	i;
 
 	i = 0;
-	if (s[i] == 0)
-		return (0);
 	while (s[i])
 		i++;
 	return (i);
 }
 
-size_t	ft_strlen_til_nl(char *s)
+/*size_t	ft_strlen_til_nl(char *s)
 {
 	size_t	i;
 
@@ -32,9 +30,9 @@ size_t	ft_strlen_til_nl(char *s)
 	while (s[i] && s[i] != '\n')
 		i++;
 	return (i);
-}
+}*/
 
-char	*ft_strjoin(char *s1, char *s2)
+char	*ft_strljoin(char *s1, char *s2, size_t len)
 {
 	char	*result;
 	size_t	i;
@@ -42,9 +40,9 @@ char	*ft_strjoin(char *s1, char *s2)
 
 	i = 0;
 	j = 0;
-	if (s1 == NULL && s2 == NULL)
+	if (!s1 || !s2)
 		return (NULL);
-	result = malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
+	result = ft_calloc((ft_strlen(s1) + len + 1), sizeof(char));
 	if (result == NULL)
 		return (NULL);
 	while (s1[i])
@@ -52,7 +50,7 @@ char	*ft_strjoin(char *s1, char *s2)
 		result[i] = s1[i];
 		i++;
 	}
-	while (s2[j])
+	while (s2[j] || j < len)
 	{
 		result[i] = s2[j];
 		i++;
