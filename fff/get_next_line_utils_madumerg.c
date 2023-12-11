@@ -5,84 +5,66 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: adjoly <adjoly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/01 17:12:02 by adjoly            #+#    #+#             */
-/*   Updated: 2023/12/08 17:52:41 by adjoly           ###   ########.fr       */
+/*   Created: 2023/11/24 11:51:43 by madumerg          #+#    #+#             */
+/*   Updated: 2023/12/08 17:21:26 by adjoly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-size_t	ft_strlen(char *s)
+size_t	ft_strlen(char *str)
 {
 	size_t	i;
 
 	i = 0;
-	while (s[i])
+	while (str[i])
 		i++;
 	return (i);
 }
 
 char	*ft_strjoin(char *s1, char *s2)
 {
-	char	*result;
+	size_t	len;
 	size_t	i;
 	size_t	j;
+	char	*str;
 
-	i = 0;
-	j = 0;
 	if (!s2)
 		return (NULL);
-	result = ft_calloc((ft_strlen(s1) + ft_strlen(s2) + 1), sizeof(char));
-	if (result == NULL)
+	len = ft_strlen(s1) + ft_strlen(s2);
+	str = malloc(sizeof(char) * (len + 1));
+	if (!str)
 		return (NULL);
-	while (s1[i])
-	{
-		result[i] = s1[i];
-		i++;
-	}
-	while (s2[j])
-	{
-		result[i] = s2[j];
-		i++;
-		j++;
-	}
-	free(s1);
-	result[i] = '\0';
-	return (result);
-}
-
-size_t	ft_strlcpy(char	*dst, char *src, size_t size)
-{
-	size_t	i;
-
 	i = 0;
-	if (size == 0)
-		return (ft_strlen(src));
-	while (i < size && src[i])
+	while (s1[i] != '\0')
 	{
-		dst[i] = src[i];
+		str[i] = s1[i];
 		i++;
 	}
-	dst[size] = '\0';
-	return (ft_strlen(src));
+	j = 0;
+	while (s2[j] != '\0')
+		str[i++] = s2[j++];
+	free(s1);
+	str[i] = '\0';
+	return (str);
 }
 
-void	*ft_calloc(size_t nmemb, size_t size)
+void	*ft_calloc(size_t ct, size_t size)
 {
 	char	*str;
 	size_t	i;
 
 	i = 0;
-	if (nmemb == 0 || size == 0)
+	if (size == 0 || ct == 0)
 		return (malloc(1));
-	if ((int)size < 0 && (int)nmemb < 0)
+	if ((int)size < 0 && (int)ct < 0)
 		return (NULL);
-	if ((unsigned long long)(size * nmemb) > 4294967295)
+	if ((unsigned long long)(size * ct) > 4294967295)
 		return (NULL);
-	str = malloc(nmemb * size);
+	str = malloc(size * ct);
 	if (!str)
 		return (NULL);
-	while (i < (nmemb * size))
+	while (i < (ct * size))
 	{
 		*(unsigned char *)(str + i) = '\0';
 		i++;
