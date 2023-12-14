@@ -6,7 +6,7 @@
 /*   By: adjoly <adjoly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 17:12:02 by adjoly            #+#    #+#             */
-/*   Updated: 2023/12/08 17:54:32 by adjoly           ###   ########.fr       */
+/*   Updated: 2023/12/14 05:59:38 by adjoly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,23 +69,23 @@ size_t	ft_strlcpy(char	*dst, char *src, size_t size)
 
 void	*ft_calloc(size_t nmemb, size_t size)
 {
-	char	*str;
+	char	*result;
 	size_t	i;
 
 	i = 0;
 	if (nmemb == 0 || size == 0)
 		return (malloc(1));
+	if (((unsigned long long)(size * nmemb) > 4294967295))
+		return (NULL);
 	if ((int)size < 0 && (int)nmemb < 0)
 		return (NULL);
-	if ((unsigned long long)(size * nmemb) > 4294967295)
+	result = malloc(size * nmemb);
+	if (!result)
 		return (NULL);
-	str = malloc(nmemb * size);
-	if (!str)
-		return (NULL);
-	while (i < (nmemb * size))
+	while (i < (size * nmemb))
 	{
-		*(unsigned char *)(str + i) = '\0';
+		*(unsigned char *)(result + i) = '\0';
 		i++;
 	}
-	return (str);
+	return (result);
 }
