@@ -6,12 +6,11 @@
 /*   By: adjoly <adjoly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 17:11:59 by adjoly            #+#    #+#             */
-/*   Updated: 2023/12/14 13:06:54 by adjoly           ###   ########.fr       */
+/*   Updated: 2023/12/14 13:27:41 by adjoly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <unistd.h>
 
 char	check_line(char *res, char *buf)
 {
