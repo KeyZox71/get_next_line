@@ -6,7 +6,7 @@
 /*   By: adjoly <adjoly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 17:11:59 by adjoly            #+#    #+#             */
-/*   Updated: 2023/12/08 18:02:13 by adjoly           ###   ########.fr       */
+/*   Updated: 2023/12/14 11:57:16 by adjoly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,20 +41,20 @@ char	*get_next_line(int fd)
 {
 	static char	*buf[1024];
 	char		*res;
-	size_t		bytes_read;
+	ssize_t		bytes_read;
 
 	res = ft_calloc(1, 1);
 	if (!buf[fd])
 		buf[fd] = ft_calloc(sizeof(char), BUFFER_SIZE + 1);
 	while (buf[fd] && res)
 	{
-		res = ft_strjoin(res, buf);
+		res = ft_strjoin(res, buf[fd]);
 		if (check_line(res, buf[fd]))
 			return (res);
 		bytes_read = read(fd, buf[fd], BUFFER_SIZE);
 		if (bytes_read < 1)
 		{
-			free(&buf[fd]);
+			free(buf[fd]);
 			buf[fd] = NULL;
 			if (res[0] != 0)
 				return (res);
