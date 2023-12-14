@@ -6,11 +6,12 @@
 /*   By: adjoly <adjoly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 17:11:59 by adjoly            #+#    #+#             */
-/*   Updated: 2023/12/14 11:52:20 by adjoly           ###   ########.fr       */
+/*   Updated: 2023/12/14 13:06:54 by adjoly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include <unistd.h>
 
 char	check_line(char *res, char *buf)
 {
@@ -37,12 +38,22 @@ char	check_line(char *res, char *buf)
 	return (0);
 }
 
+char	*gnl_end_file(char *res)
+{
+	if (res[0] != 0)
+		return (res);
+	free(res);
+	return (NULL);
+}
+
 char	*get_next_line(int fd)
 {
 	static char	*buf;
 	char		*res;
 	ssize_t		bytes_read;
 
+	if (BUFFER_SIZE <= 0 || fd < 0 || fd > 1023)
+		return (NULL);
 	res = ft_calloc(1, 1);
 	if (!buf)
 		buf = ft_calloc(sizeof(char), BUFFER_SIZE + 1);
@@ -56,10 +67,7 @@ char	*get_next_line(int fd)
 		{
 			free(buf);
 			buf = NULL;
-			if (res[0] != 0)
-				return (res);
-			free(res);
-			return (NULL);
+			return (gnl_end_file(res));
 		}
 		buf[bytes_read] = 0;
 	}
