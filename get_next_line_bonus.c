@@ -6,7 +6,7 @@
 /*   By: adjoly <adjoly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 17:11:59 by adjoly            #+#    #+#             */
-/*   Updated: 2023/12/14 13:27:45 by adjoly           ###   ########.fr       */
+/*   Updated: 2023/12/15 05:51:22 by adjoly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,10 @@ char	check_line(char *res, char *buf)
 	return (0);
 }
 
-char	*gnl_end_line(char *res)
+char	*ft_read_error(char **buf, char *res)
 {
+	free(*buf);
+	*buf = NULL;
 	if (res[0] != 0)
 		return (res);
 	free(res);
@@ -53,21 +55,19 @@ char	*get_next_line(int fd)
 
 	if (BUFFER_SIZE <= 0 || fd < 0 || fd > 1023)
 		return (NULL);
-	res = ft_calloc(1, 1);
 	if (!buf[fd])
 		buf[fd] = ft_calloc(sizeof(char), BUFFER_SIZE + 1);
+	res = ft_calloc(1, 1);
 	while (buf[fd] && res)
 	{
 		res = ft_strjoin(res, buf[fd]);
+		if (!res)
+			return (NULL);
 		if (check_line(res, buf[fd]))
 			return (res);
 		bytes_read = read(fd, buf[fd], BUFFER_SIZE);
 		if (bytes_read < 1)
-		{
-			free(buf[fd]);
-			buf[fd] = NULL;
-			return (gnl_end_line(res));
-		}
+			return (ft_read_error(&buf[fd], res));
 		buf[fd][bytes_read] = 0;
 	}
 	return (NULL);

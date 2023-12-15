@@ -6,7 +6,7 @@
 /*   By: adjoly <adjoly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 17:12:02 by adjoly            #+#    #+#             */
-/*   Updated: 2023/12/14 05:59:38 by adjoly           ###   ########.fr       */
+/*   Updated: 2023/12/15 05:42:57 by adjoly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,22 +49,6 @@ char	*ft_strjoin(char *s1, char *s2)
 	free(s1);
 	result[i] = '\0';
 	return (result);
-}
-
-size_t	ft_strlcpy(char	*dst, char *src, size_t size)
-{
-	size_t	i;
-
-	i = 0;
-	if (size == 0)
-		return (ft_strlen(src));
-	while (i < size && src[i])
-	{
-		dst[i] = src[i];
-		i++;
-	}
-	dst[size] = '\0';
-	return (ft_strlen(src));
 }
 
 void	*ft_calloc(size_t nmemb, size_t size)
